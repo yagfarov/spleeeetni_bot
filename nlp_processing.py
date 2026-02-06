@@ -18,6 +18,8 @@ replace_dict = {
     "ORG": "*организация*"
 }
 
+DEVICE = torch.device("cpu")
+
 def anonymize_text(text: str) -> str:
     words = text.split()
 
@@ -47,9 +49,13 @@ def anonymize_text(text: str) -> str:
         prev_word_id = word_id
 
     filtered_words = []
-    for word, label in zip(words, pred_labels):
-        entity = label.split("-")[-1]
-        filtered_words.append(replace_dict.get(entity, word))
+    for i, word in enumerate(words):
+        if i < len(pred_labels):
+            label = pred_labels[i]
+            entity = label.split("-")[-1]
+            filtered_words.append(replace_dict.get(entity, word))
+        else:
+            filtered_words.append(word)
 
     return " ".join(filtered_words)
 
@@ -57,7 +63,8 @@ def anonymize_text(text: str) -> str:
 
 mood_model = pipeline(
     "sentiment-analysis",
-    model="blanchefort/rubert-base-cased-sentiment"
+    model="blanchefort/rubert-base-cased-sentiment",
+    device=-1
 )
 
 def analyze_sentiment(text: str) -> str:
