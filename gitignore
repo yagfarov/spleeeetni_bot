@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Database
+data/db.sqlite
+
+# Models / weights
+data/models/**/model.safetensors
+
+# HuggingFace cache
+.cache/
+hf_cache/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Secrets
+config_local.py
